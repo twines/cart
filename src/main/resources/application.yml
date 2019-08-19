@@ -7,15 +7,13 @@ spring:
       content-type: text/html
     suffix: .html
     prefix: classpath:/templates/
-    mode: HTML5
     cache: false
   datasource:
-    url:jdbc: mysql://127.0.0.1/goCart?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true
     username: root
     password: 12345678
+    url: jdbc:mysql://localhost:3306/gocart?serverTimezone=UTC
     driver-class-name:  com.mysql.cj.jdbc.Driver
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: create
-    show-sql: true
-

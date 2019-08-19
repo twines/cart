@@ -1,16 +1,21 @@
 package com.xsk.cart.controller;
 
 
+import com.xsk.cart.domain.UserEntity;
+import com.xsk.cart.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
+import java.util.*;
 
 
 @RestController
 public class HelloController {
+    @Autowired
+    UserService service;
 
     @RequestMapping("/")
     public String index() {
@@ -18,12 +23,29 @@ public class HelloController {
     }
 
     @RequestMapping("/hello")
-    public ModelAndView hello() {
-        HashMap mp = new HashMap();
-        mp.put("name", "Jack Lee");
-        ModelAndView view = new ModelAndView("hello",mp);
+    public ModelAndView hello(Model model) {
 
-        return view;
+        Map map = new HashMap();
+        map.put("name", "jack lee");
+        List list = new ArrayList();
+        for (int index = 0; index < 10; index++) {
+            Map iMap = new HashMap();
+            iMap.put("value", "我是第" + index);
+            list.add(iMap);
+        }
+        map.put("list", list);
+        ModelAndView v = new ModelAndView("hello", map);
+        return v;
     }
 
+    @RequestMapping("/jps")
+    public UserEntity jpsDao() {
+        Optional<UserEntity> op = service.FindUserById(Long.valueOf(1));
+        if (op.isPresent()) {
+            UserEntity userEntity = op.get();
+            return userEntity;
+        }else {
+            return null;
+        }
+    }
 }
