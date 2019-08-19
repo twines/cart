@@ -1,0 +1,20 @@
+{
+  "name": "resources",
+  "homepage": "https://github.com/skeyboy/cart",
+  "authors": [
+    "sk <lylapp@163.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "admin-lte": "^2.4.17"
+  }
+}
