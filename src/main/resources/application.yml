@@ -11,9 +11,18 @@ spring:
   datasource:
     username: root
     password: 12345678
-    url: jdbc:mysql://localhost:3306/gocart?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/cart?serverTimezone=UTC
     driver-class-name:  com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+mybatis:
+  type-aliases-package: com.xsk.cart.model
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/config/mybatis-config.xml
+
+logging:
+  level:
+    com.xsk.cart.mapper: debug

@@ -1,9 +1,6 @@
 package com.xsk.cart.controller;
 
 
-import com.sun.tools.internal.xjc.model.Model;
-import com.xsk.cart.domain.UserEntity;
-import com.xsk.cart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +12,11 @@ import java.util.*;
 
 @RestController
 public class HelloController {
-    @Autowired
-    UserService service;
 
     @RequestMapping("/")
     public String index() {
+
+
         return "Hello";
     }
 
@@ -39,23 +36,4 @@ public class HelloController {
         return v;
     }
 
-    @RequestMapping("/jps")
-    public UserEntity jpsDao() {
-        Optional<UserEntity> op = service.FindUserById(Long.valueOf(1));
-        if (op.isPresent()) {
-            UserEntity userEntity = op.get();
-            return userEntity;
-        } else {
-            return null;
-        }
-    }
-
-    @RequestMapping("/users")
-    public ModelAndView userList(ModelMap modelMap) {
-        List<UserEntity> users = service.FindAllUsers();
-
-        modelMap.put("users", users);
-        ModelAndView mv = new ModelAndView("userlist", modelMap);
-        return mv;
-    }
 }

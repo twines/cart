@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xsk.cart.mapper.AuthorMapper">
+    <resultMap id="BaseResultMap" type="com.xsk.cart.model.Author">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="bio" property="bio" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertAuthor"  >
+        insert into Author(user_name, password,email,bio)
+        values (#{userName},#{password},#{email},#{bio})
+    </insert>
+    <update id="updateAuthor">
+        update Author set
+        user_name=#{userName},
+        password=#{password},
+        email=#{email},
+        bio=#{bio}
+        where id=#{id}
+    </update>
+    <select id="findAll" resultType="Author">
+        select * from Author
+    </select>
+    <select id="findSomeAuthor" parameterType="Integer" resultType="Author">
+        select * from Author where id=#{authorId}
+    </select>
+
+</mapper>
