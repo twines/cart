@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SpringBoot模版渲染</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!--<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>-->
+    <link rel="stylesheet" href="/bower_components/admin-lte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+    、
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <p th:text="'用户ID：' + ${uid}"/>
+    <p th:text="'用户名称：' + ${name}"/>
+
+    <ul th:each="item:${list}">
+        <li th:text="${item.value}"/>
+    </ul>
+    <div th:include="@{/layout/footer} :: companyInfo" th:with="projectName=百度"/>
+</div>
+<footer class="main-footer">
+</footer>
+
+</body>
+</html>
