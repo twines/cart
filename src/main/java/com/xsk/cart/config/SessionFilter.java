@@ -3,6 +3,7 @@ package com.xsk.cart.config;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,7 @@ public class SessionFilter implements javax.servlet.Filter {
     String NO_LOGIN = "您还未登录";
 
     //不需要登录就可以访问的路径(比如:注册登录等)
-    String[] includeUrls = new String[]{"/login","register"};
+    String[] includeUrls = new String[]{"/login","/register","/error500Page","/error404Page","/error401Page"};
 
 
     @Override
@@ -40,6 +41,18 @@ public class SessionFilter implements javax.servlet.Filter {
         String uri = request.getRequestURI();
 
         System.out.println("filter url:" + uri);
+
+        //cookie遍历
+        Cookie[] cookies =  request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("sessionId")){
+                    String cookieInfo = cookie.getValue();
+                    System.out.println(cookieInfo);
+                }
+            }
+        }
+
         //是否需要过滤
         boolean needFilter = isNeedFilter(uri);
 
