@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "admin-lte": "^2.4.17"
+  }
+}
