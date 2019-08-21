@@ -1,12 +1,13 @@
 package com.xsk.cart.controller;
 
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class ExceptionController {
     public static final String DEFAULT_ERROR_VIEW = "error"; // 定义错误显示页，error.html
     class ErrorInfo {
@@ -47,11 +48,14 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(Exception.class) // 所有的异常都是Exception子类
-    public Object defaultErrorHandler(HttpServletRequest request, Exception e) {
+    public ModelAndView defaultErrorHandler(HttpServletRequest request, Exception e) {
         ErrorInfo info = new ErrorInfo();
         info.setCode(100);     // 标记一个错误信息类型
         info.setMessage(e.getMessage());
         info.setUrl(request.getRequestURL().toString());
-        return info;
+        ModelAndView mav = new ModelAndView("error"); // 设置跳转路径
+        mav.addObject("exception", info); // 将异常对象传递过去
+        mav.addObject("url", request.getRequestURL()); // 获得请求的路径
+        return mav;
     }
 }

@@ -20,8 +20,8 @@ public class ErrorPageController {
     }
     @GetMapping(value = "/error404Page")
     public ModelAndView error404Page(Map model) {
-        model.put("code","6666666");
-        model.put("msg","服务器降级中......");
+        model.put("code","404");
+        model.put("msg","您访问的页面不存在");
         return new ModelAndView("404",model);
     }
     @GetMapping(value = "/error500Page")
