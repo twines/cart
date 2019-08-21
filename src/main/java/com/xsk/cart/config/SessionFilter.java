@@ -15,17 +15,22 @@ public class SessionFilter implements javax.servlet.Filter {
     String NO_LOGIN = "您还未登录";
 
     //不需要登录就可以访问的路径(比如:注册登录等)
-    String[] includeUrls = new String[]{"/login","/register","/error500Page","/error404Page","/error401Page"};
-
+    String[] includeUrls = new String[]{"/login", "/register", "/error500Page", "/error404Page", "/error401Page"};
+    String[] extensionList = new String[]{".js", ".css", ".map"};
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
-    public boolean isNeedFilter(String uri) {
 
+    public boolean isNeedFilter(String uri) {
+        for (String extension : extensionList) {
+            if (uri.endsWith(extension)) {
+                return false;
+            }
+        }
         for (String includeUrl : includeUrls) {
-            if(includeUrl.equals(uri)) {
+            if (includeUrl.equals(uri)) {
                 return false;
             }
         }
@@ -43,10 +48,10 @@ public class SessionFilter implements javax.servlet.Filter {
         System.out.println("filter url:" + uri);
 
         //cookie遍历
-        Cookie[] cookies =  request.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("sessionId")){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("sessionId")) {
                     String cookieInfo = cookie.getValue();
                     System.out.println(cookieInfo);
                 }
