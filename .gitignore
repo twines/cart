@@ -1,3 +1,10 @@
-.idea
-/src/main/resources/static/node_modules
-/target
+.idea/
+target/
+/src/main/resources/static/bower_components/
+.DS_Store
+src/main/.DS_Store
+src/main/java/com/.DS_Store
+src/main/resources/.DS_Store
+src/main/resources/mybatis/.DS_Store
+src/main/java/com/xsk/cart/dao/
+src/main/java/com/xsk/cart/domain/

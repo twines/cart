@@ -14,7 +14,7 @@ public class AuthorController {
     @Autowired
     AuthorService authorService;
 
-    @RequestMapping(value = "/author/{authorId}")
+    @GetMapping(value = "/author/{authorId}")
     public ModelAndView someAuthor(@PathVariable("authorId") long authorId,
                                    @RequestParam("userName") String userName,
                                    Map values) {

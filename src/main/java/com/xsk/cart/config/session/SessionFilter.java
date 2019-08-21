@@ -1,5 +1,7 @@
-package com.xsk.cart.config;
+package com.xsk.cart.config.session;
 
+
+import com.xsk.cart.utilities.CartTool;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -16,7 +18,7 @@ public class SessionFilter implements javax.servlet.Filter {
 
     //不需要登录就可以访问的路径(比如:注册登录等)
     String[] includeUrls = new String[]{"/login", "/register", "/error500Page", "/error404Page", "/error401Page"};
-    String[] extensionList = new String[]{".js", ".css", ".map"};
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,11 +26,7 @@ public class SessionFilter implements javax.servlet.Filter {
     }
 
     public boolean isNeedFilter(String uri) {
-        for (String extension : extensionList) {
-            if (uri.endsWith(extension)) {
-                return false;
-            }
-        }
+
         for (String includeUrl : includeUrls) {
             if (includeUrl.equals(uri)) {
                 return false;
@@ -44,8 +42,17 @@ public class SessionFilter implements javax.servlet.Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
-
         System.out.println("filter url:" + uri);
+
+        if (session != null && session.getAttribute(session.getId()) != null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        //不对POST拦截
+        if (request.getMethod().toUpperCase().equals("POST")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
 
         //cookie遍历
         Cookie[] cookies = request.getCookies();
@@ -76,7 +83,8 @@ public class SessionFilter implements javax.servlet.Filter {
                     response.getWriter().write(this.NO_LOGIN);
                 } else {
                     //重定向到登录页(需要在static文件夹下建立此html文件)
-                    response.sendRedirect(request.getContextPath() + "/login");
+//                    response.sendRedirect(request.getContextPath() + "/user/login");
+                    CartTool.sendRedirect(request, response, "/login");
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.xsk.cart.config;
+package com.xsk.cart.config.error;
 
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.ErrorPageRegistrar;
