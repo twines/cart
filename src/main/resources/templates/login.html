@@ -1,26 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>用户登录</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-    <!--<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>-->
-    <link rel="stylesheet" href="/node_modules/admin-lte/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="/node_modules/Ionicons/css/ionicons.min.css">
-    、
+<head th:include="@{/layout/header} :: headerInfo" th:with="title=标题"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+
+
 <div class="wrapper">
-<form action="/user/login" method="post">
-    <input name="name" type="text" placeholder="用户名">
-    <input placeholder="密码" type="password" name="pwd">
-    <button type="submit">提交</button>
-</form>
+    <form action="/user/login" method="post">
+        <input name="name" type="text" placeholder="用户名">
+        <input placeholder="密码" type="password" name="pwd">
+        <button type="submit">提交</button>
+    </form>
     <div th:include="@{/layout/footer} :: companyInfo" th:with="projectName=百度"/>
 </div>
 <footer class="main-footer">

@@ -6,6 +6,7 @@ import com.xsk.cart.utilities.ModelAndViewTool;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +27,9 @@ public class LoginController {
         if (u != null) {
 
         } else {
-                User user = new User();
-                user.setUser(name);
-                session.setAttribute(sessionId, user);
+            User user = new User();
+            user.setUser(name);
+            session.setAttribute(sessionId, user);
         }
 
 //     return    CartTool.redirectTo("/user/login");//此时不能用Restfull
@@ -36,9 +37,7 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public ModelAndView index(Map value,HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String sessionId = session.getId();
-        return new ModelAndView("login", value);
+    public String index() {
+        return "login";
     }
 }

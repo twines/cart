@@ -26,9 +26,10 @@ public class SessionFilter implements javax.servlet.Filter {
     }
 
     public boolean isNeedFilter(String uri) {
+        boolean isStaticResource = uri.split(".").length > 0;
 
         for (String includeUrl : includeUrls) {
-            if (includeUrl.equals(uri)) {
+            if (includeUrl.equals(uri)|| isStaticResource ==false) {
                 return false;
             }
         }
