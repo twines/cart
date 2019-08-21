@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "sessionFilter", urlPatterns = {"/*"})
+//@WebFilter(filterName = "sessionFilter", urlPatterns = {"/*"})
 public class SessionFilter implements javax.servlet.Filter {
     //标示符：表示当前用户未登录(可根据自己项目需要改为json样式)
     String NO_LOGIN = "您还未登录";
