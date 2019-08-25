@@ -1,12 +1,15 @@
 package fang.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "dailies")
-public class Daily extends BaseEntity{
+public class Daily extends BaseEntity {
 
 
     String title;
@@ -17,8 +20,9 @@ public class Daily extends BaseEntity{
     public Daily() {
     }
 
-    @OneToMany(mappedBy = "daily",fetch = FetchType.EAGER)
-    Set<Treat> treats;
+    @OneToMany(mappedBy = "daily", fetch = FetchType.EAGER)
+    @JsonIgnore
+    Set<Treat> treats = new HashSet<>();
 
     public Set<Treat> getTreats() {
         return treats;

@@ -1,15 +1,20 @@
 package fang.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "daily_treats")
-public class Treat extends BaseEntity{
+public class Treat extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    @ManyToOne
+    @Transient
+    Long dailyId;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "daily_id")
     Daily daily;
     String region;
 

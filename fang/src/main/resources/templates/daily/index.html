@@ -3,9 +3,13 @@
 <head th:replace=" @{/common/index}::head(~{::title}, ~{::link}, ~{::style})">
     <title>首页</title>
 </head>
-<body class="layui-layout-body">
+<body >
 <div class="layui-main site-inline site-fix">
+    <!--    <span id="testView">sss</span>-->
+    <!--    <div id="test2"></div>-->
+
     <div class="layui-tab layui-tab-card">
+
         <div class="layui-inline"> <!-- 注意：这一层元素并不是必须的 -->
             <input type="text" class="layui-input" id="daily">
         </div>
@@ -42,16 +46,35 @@
 <script>
     layui.use('laydate', function(){
         var laydate = layui.laydate;
+        var $ = layui.jquery;
 
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#daily'
-            ,trigger: 'click'
 
-            ,change: function(value, date){ //监听日期被切换
-                lay('#daily').value=date;
-                console.log(date);
-            }
+        //jQuery监听
+        $("#daily").blur(function (e) {
+
+            console.log("jquery"+e);
+        });
+
+
+        //lay方式家庭
+        lay("#daily").on('blur', function (e) {
+            console.log(lay("#daily"));
+        });
+
+        //根据事件动态渲染
+        lay("#daily").on('focus', function (e) {
+            laydate.render({
+                elem: '#daily'
+                ,show: true
+                ,trigger: 'click'
+                ,change: function(value, date){ //监听日期被切换
+                    console.log(date);
+                    console.log(value);
+                    lay("#daily")[0].value = value;
+                    console.log(lay("#daily")[0]);
+                }
+
+            });
         });
     });
 </script>
