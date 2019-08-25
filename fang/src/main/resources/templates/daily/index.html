@@ -3,7 +3,7 @@
 <head th:replace=" @{/common/index}::head(~{::title}, ~{::link}, ~{::style})">
     <title>首页</title>
 </head>
-<body >
+<body>
 <div class="layui-main site-inline site-fix">
     <!--    <span id="testView">sss</span>-->
     <!--    <div id="test2"></div>-->
@@ -39,12 +39,110 @@
             </div>
         </div>
     </div>
+    <div>
+        <a class="layui-btn layui-btn-primary" href="https://www.layui.com/demo/table.html">点击跳转数据表格实例参考</a>
+        <button id="reload">重新加载</button>
+
+    </div>
+    <div id="demo" lay-filter="demo-filter"></div>
 
 
 </div>
 <script th:replace="/common/index :: script"></script>
+
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
+    </div>
+</script>
+
 <script>
-    layui.use('laydate', function(){
+
+    layui.use(['table', 'jquery'], function () {
+
+        var table = layui.table;
+        var $ = layui.jquery;
+
+        var demoTable = table.render({
+            toolbar: '#toolbarDemo',
+            skin: 'line' //行边框风格
+            , even: true,//隔行背景
+            elem: '#demo'
+            , url: '/daily'
+            , where: {}
+            , page: true
+            , limit: 20
+            , request: {
+                pageName: 'page' //页码的参数名称，默认：page
+                , limitName: 'size' //每页数据量的参数名，默认：limit
+            }
+            , response: {
+                statusName: 'code' //规定数据状态的字段名称，默认：code
+                , statusCode: 0 //规定成功的状态码，默认：0
+                , msgName: 'msg' //规定状态信息的字段名称，默认：msg
+                , countName: 'count' //规定数据总数的字段名称，默认：count
+                , dataName: 'data' //规定数据列表的字段名称，默认：data
+            }
+            , parseData: function (res) {
+                return {
+                    'code': res.code,//解析接口状态
+                    "msg": res.msg,//解析提示文本
+                    "count": res.count,//数据总长度
+                    "data": res.data.item //列
+                };
+            }
+            , cols: [
+                [
+                    {field: 'id', title: 'id', sort: true, fixed: 'left'}
+                    , {field: 'title', title: '标题', sort: true, fixed: 'center'}
+                    , {
+                    field: 'link', title: '链接', sort: true, fixed: 'left', templet: function (d) {
+                        return '<a href=' + d.link + '>链接</a>';
+                    }
+                }
+
+
+
+                ]
+            ]
+        });
+        //监听事件
+        table.on('toolbar(demo-filter)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    layer.msg('添加');
+                    break;
+                case 'delete':
+                    layer.msg('删除');
+                    break;
+                case 'update':
+                    layer.msg('编辑');
+                    break;
+            }
+            ;
+        });
+        //通过button事件重新加载
+        $("#reload").click(function () {
+            //这里以搜索为例
+            demoTable.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    // page: '1'
+                    // ,size: '20'
+                    // //…
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        });
+
+
+    });
+    layui.use('laydate', function () {
         var laydate = layui.laydate;
         var $ = layui.jquery;
 
@@ -52,7 +150,7 @@
         //jQuery监听
         $("#daily").blur(function (e) {
 
-            console.log("jquery"+e);
+            console.log("jquery" + e);
         });
 
 
@@ -65,9 +163,9 @@
         lay("#daily").on('focus', function (e) {
             laydate.render({
                 elem: '#daily'
-                ,show: true
-                ,trigger: 'click'
-                ,change: function(value, date){ //监听日期被切换
+                , show: true
+                , trigger: 'click'
+                , change: function (value, date) { //监听日期被切换
                     console.log(date);
                     console.log(value);
                     lay("#daily")[0].value = value;

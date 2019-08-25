@@ -21,7 +21,7 @@ public class Daily extends BaseEntity {
     }
 
     @OneToMany(mappedBy = "daily", fetch = FetchType.EAGER)
-    @JsonIgnore
+//    @JsonIgnore
     Set<Treat> treats = new HashSet<>();
 
     public Set<Treat> getTreats() {
