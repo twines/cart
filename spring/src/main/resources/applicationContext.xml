@@ -2,15 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
    http://www.springframework.org/schema/aop
-   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-    <context:component-scan base-package="com.aop"/>
-    <!-- 自动为切面方法中匹配的方法所在的类生成代理对象。 -->
-    <aop:aspectj-autoproxy/>
-
+   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
     <bean class="com.aop.ProductService" name="productService"/>
     <bean class="com.aop.LogAspect" name="logAspect"/>
     <aop:config>
@@ -20,13 +15,7 @@
 <!--       做什么增强 将切入点 引入到切面中 -->
         <aop:aspect id="logAspect" ref="logAspect">
 <!--在什么时机（方法前后）做-->
-
-
             <aop:around pointcut-ref="loggerCutpoint" method="log"/>
-<!--            AOP可以细分契入点执行的整个过程 开始前进行 进行后 返回后 以及执行中产生的异常-->
-<!--            <aop:before method=""/>-->
-<!--            <aop:after method=""/>-->
-<!--            <aop:after-returning method=""/>-->
         </aop:aspect>
     </aop:config>
 </beans>
