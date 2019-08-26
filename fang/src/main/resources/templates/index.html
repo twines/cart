@@ -70,6 +70,25 @@
                         <span class="layui-nav-title" th:text="${'首页'}">一级菜单</span></a>
                 </li>
                 <li class="layui-nav-item">
+                    <a href="javascript:;" th:attr="lay-url=${'#'}">
+                        <i class="fa fa-code"></i>
+                        <span class="layui-nav-title">layui学习</span>
+                        <span class="layui-nav-more">开啦剪头</span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd class="layui-nav-item">
+                            <a th:attr="lay-url=@{'/grid'}">
+                                <span th:class="layui-nav-title">栅格学习</span>
+                            </a>
+                        </dd>
+                        <dd th:class="layui-nav-item">
+                            <a th:attr="lay-url=@{'/form'}">
+                                <span th:class="layui-nav-title">form表单</span>
+                            </a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
                     <a href="javascript:;" lay-url="#">
                         <i class="fa fa-cog"></i>
                         <span class="layui-nav-title">系统管理</span>
@@ -79,6 +98,11 @@
                         <dd class="layui-this">
                             <a href="javascript:;" lay-url="/daily/page/1/size/5">
                                 <span class="layui-nav-title">每日数据</span>
+                            </a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" lay-url="/grid">
+                                <span class="layui-nav-title">栅格学习</span>
                             </a>
                         </dd>
                         <dd class="">
@@ -133,6 +157,6 @@
 </div>
 
 </div>
-<script th:replace="/common/index :: script"></script>
+<script th:replace="@{/common/index} :: script"></script>
 </body>
 </html>

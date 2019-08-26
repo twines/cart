@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace=" @{/common/index}::head(~{::title}, ~{::link}, ~{::style})">
+    <title>首页</title>
+</head>
+<body>
+
+<div class="layui-container">
+    <blockquote class="layui-elem-quote">
+        注意：下述演示中的颜色只是做一个区分作用，并非栅格内置。
+    </blockquote>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>始终等比例水平排列</legend>
+
+    </fieldset>
+    <div class="layui-row">
+        <div class="layui-col-xs6">
+            6/12
+        </div>
+        <div class="layui-col-xs6">6/12</div>
+
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-xs3">3/12</div>
+        <div class="layui-col-xs3">3/12</div>
+        <div class="layui-col-xs3">3/12</div>
+        <div class="layui-col-xs3">3/12</div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-md8">
+            移动：12/12、桌面：8/12
+        </div>
+        <div class="layui-col-xs6 layui-col-md4">
+            移动：6/12、桌面：4/12
+        </div>
+        <div class="layui-col-xs6 layui-col-md12">
+            移动：6/12、桌面：12/12
+        </div>
+    </div>
+
+    <fieldset class="layui-field-title">
+        <legend>增加列间隔</legend>
+        默认是每个layui-row 被划分为12份
+    </fieldset>
+    <div class="layui-row layui-col-space5 -align-center">
+        <div class="layui-col-md4">间隔5px</div>
+        <div class="layui-row layui-col-md8 layui-col-space25">
+                 <div class="layui-col-md4">间隔5px</div>
+                <div class="layui-col-md3">间隔5px</div>
+                <div class="layui-col-md2 layui-col-md-offset3">间隔5px,这个标签偏移了md-3</div>
+        </div>
+        <fieldset>
+            <legend>分为12份，沾满换行</legend>
+        </fieldset>
+        <div class="layui-row">
+            <div class="layui-col-xs12 layui-col-lg8">移动12 桌面8/12</div>
+            <div class="layui-col-xs6 layui-col-lg4">移动6/12 桌面4/12</div>
+            <div class="layui-col-xs6 layui-col-lg12">移动6/12 煮面12</div>
+        </div>
+        <fieldset>
+            <legend>嵌套row</legend>
+        </fieldset>
+        <div class="layui-row">
+            <div class="layui-col-xs7">
+                <div class="layui-row layui-col-lg8">
+                    8/12
+                </div>
+                <div class="layui-col-lg4">
+                    4/12
+                </div>
+            </div>
+            <div class="layui-col-xs5">
+                5/12
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script th:replace="/common/index :: script"></script>
+</body>
+</html>

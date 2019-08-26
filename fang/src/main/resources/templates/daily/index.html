@@ -40,6 +40,12 @@
         </div>
     </div>
     <div>
+        <fieldset>
+            通过table的filter来区分tool toolbar
+            如下面的 tool(demo-filter)
+            tool为tool
+            demo-filter为tabl的filter
+        </fieldset>
         <a class="layui-btn layui-btn-primary" href="https://www.layui.com/demo/table.html">点击跳转数据表格实例参考</a>
         <button id="reload">重新加载</button>
 
@@ -53,12 +59,15 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button id="add" class="layui-btn layui-btn-sm" lay-event="add">添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
         <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
     </div>
 </script>
-
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 <script>
 
     layui.use(['table', 'jquery'], function () {
@@ -67,11 +76,11 @@
         var $ = layui.jquery;
 
         var demoTable = table.render({
-            toolbar: '#toolbarDemo',
             skin: 'line' //行边框风格
             , even: true,//隔行背景
             elem: '#demo'
             , url: '/daily'
+            ,toolbar: '#toolbarDemo'
             , where: {}
             , page: true
             , limit: 20
@@ -86,23 +95,26 @@
                 , countName: 'count' //规定数据总数的字段名称，默认：count
                 , dataName: 'data' //规定数据列表的字段名称，默认：data
             }
-            , parseData: function (res) {
-                return {
-                    'code': res.code,//解析接口状态
-                    "msg": res.msg,//解析提示文本
-                    "count": res.count,//数据总长度
-                    "data": res.data.item //列
-                };
-            }
+            // , parseData: function (res) {
+            //     return {
+            //         'code': res.code,//解析接口状态
+            //         "msg": res.msg,//解析提示文本
+            //         "count": res.count,//数据总长度
+            //         "data": res.data.item //列
+            //     };
+            // }
             , cols: [
                 [
-                    {field: 'id', title: 'id', sort: true, fixed: 'left'}
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id', title: 'id', sort: true, fixed: 'left'}
                     , {field: 'title', title: '标题', sort: true, fixed: 'center'}
                     , {
                     field: 'link', title: '链接', sort: true, fixed: 'left', templet: function (d) {
                         return '<a href=' + d.link + '>链接</a>';
                     }
                 }
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+
 
 
 
@@ -111,6 +123,7 @@
         });
         //监听事件
         table.on('toolbar(demo-filter)', function (obj) {
+            console.log(obj);
             var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {
                 case 'add':
@@ -124,6 +137,34 @@
                     break;
             }
             ;
+        });
+
+        //监听行工具事件
+        table.on('tool(demo-filter)', function(obj){
+
+            var data = obj.data;
+            console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+
+        $('#add').click(function () {
+            // alert("");
+
         });
         //通过button事件重新加载
         $("#reload").click(function () {
