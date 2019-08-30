@@ -11,6 +11,7 @@
     <modules>
         <module>fang</module>
         <module>spring</module>
+        <module>batis</module>
     </modules>
 
     <parent>
